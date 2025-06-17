@@ -26,6 +26,16 @@
             max-width: 600px;
             font-size: 1.2em;
         }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            width: 200px;
+            background: #fff;
+            color: #333;
+        }
         button {
             padding: 12px 24px;
             font-size: 16px;
@@ -43,13 +53,19 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to My Colorful Website</h1>
-    <p>This is a vibrant webpage created with HTML, CSS, and JavaScript. Click the button below to see a fun interaction!</p>
+    <h1>Welcome to Website</h1>
+    <p2>22Dh112225_Vo Hoan My</p2>
+    <input type="text" id="nameInput" placeholder="Your name">
     <button onclick="showMessage()">Click Me!</button>
 
     <script>
         function showMessage() {
-            alert("Wow! You just clicked a colorful button!");
+            const name = document.getElementById('nameInput').value;
+            if (name.trim() === "") {
+                alert("Please enter your name!");
+            } else {
+                alert(`Hello, ${name}! Thanks for visiting my colorful website!`);
+            }
         }
     </script>
 </body>
