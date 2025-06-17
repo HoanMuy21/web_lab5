@@ -45,26 +45,104 @@
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, background 0.3s;
+            margin: 5px;
         }
         button:hover {
             background: linear-gradient(45deg, #ee5253, #ff9f43);
             transform: scale(1.1);
         }
+        #clearButton {
+            background: linear-gradient(45deg, #6b7280, #374151);
+        }
+        #clearButton:hover {
+            background: linear-gradient(45deg, #374151, #6b7280);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            text-align: center;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        li {
+            color: #f0f0f0;
+            font-size: 1.1em;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        li:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to Website</h1>
-    <p2>22Dh112225_Vo Hoan My</p2>
+    <h1 id="welcomeMessage">Welcome to Website</h1>
+    <p>22Dh112225_Vo Hoan My</p>
+    <p>Enter your name below and click to save it!</p>
     <input type="text" id="nameInput" placeholder="Your name">
-    <button onclick="showMessage()">Click Me!</button>
+    <button onclick="saveName()">Save Name</button>
+    <button id="clearButton" onclick="clearNames()">Clear All Names</button>
+    <p>Saved Names (<span id="nameCount">0</span>):</p>
+    <ul id="nameList"></ul>
 
     <script>
-        function showMessage() {
-            const name = document.getElementById('nameInput').value;
-            if (name.trim() === "") {
+        // Load welcome message from server
+        fetch('/config')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('welcomeMessage').textContent = data.WELCOME_MESSAGE || 'Welcome to Website';
+            });
+
+        // Load saved names when page loads
+        document.addEventListener('DOMContentLoaded', loadNames);
+
+        async function saveName() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            if (name === "") {
                 alert("Please enter your name!");
-            } else {
-                alert(`Hello, ${name}! Thanks for visiting my colorful website!`);
+                return;
+            }
+
+            // Send name to server
+            await fetch('/names', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+
+            // Clear input
+            nameInput.value = "";
+
+            // Show confirmation
+            alert(`Hello, ${name}! Your name has been saved!`);
+
+            // Update displayed names
+            loadNames();
+        }
+
+        async function loadNames() {
+            const nameList = document.getElementById('nameList');
+            const nameCount = document.getElementById('nameCount');
+            const response = await fetch('/names');
+            const names = await response.json();
+            nameList.innerHTML = ""; // Clear current list
+            names.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                nameList.appendChild(li);
+            });
+            nameCount.textContent = names.length; // Update count
+        }
+
+        async function clearNames() {
+            if (confirm("Are you sure you want to clear all names?")) {
+                await fetch('/names', { method: 'DELETE' });
+                loadNames();
             }
         }
     </script>
