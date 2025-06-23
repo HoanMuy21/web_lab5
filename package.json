@@ -1,13 +1,13 @@
 {
-  "name": "simple-website",
+  "name": "web_lab5",
   "version": "1.0.0",
-  "description": "A simple colorful website",
+  "description": "Simple web app with Express and PostgreSQL",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "mongodb": "^4.12.0"
+    "pg": "^8.11.1"
   }
 }
