@@ -1,263 +1,465 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ứng Dụng Lưu Tên</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Lưu Tên</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0, #fff3e0);
-      background-size: 200% 200%;
-      animation: gradientShift 20s ease infinite;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0, #fff3e0);
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
+            color: #1e3a8a;
+            overflow-x: hidden;
+        }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .container {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      padding: 32px;
-      border-radius: 28px;
-      box-shadow: 0 10px 30px rgba(244, 143, 177, 0.2);
-      max-width: 700px;
-      width: 90%;
-      text-align: center;
-      transition: all 0.4s ease;
-      position: relative;
-      color: #ffffff;
-    }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(244, 143, 177, 0.2);
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
 
-    h1 {
-      font-size: 34px;
-      font-weight: 600;
-      color: #ffffff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      margin-bottom: 8px;
-    }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(244, 143, 177, 0.3);
+        }
 
-    .subtext {
-      font-size: 15px;
-      color: #ffffff;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
+        h1 {
+            font-size: 34px;
+            font-weight: 600;
+            color: #1e3a8a;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 8px;
+        }
 
-    input {
-      padding: 14px 16px;
-      width: 100%;
-      font-size: 15px;
-      border-radius: 14px;
-      border: none;
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      outline: none;
-    }
+        .subtext {
+            font-size: 15px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
 
-    input::placeholder {
-      color: #eeeeee;
-    }
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
 
-    .button-group {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
+        input {
+            padding: 14px 16px;
+            width: 100%;
+            font-size: 15px;
+            border-radius: 14px;
+            border: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #880e4f;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
 
-    button {
-      padding: 14px 28px;
-      font-size: 15px;
-      font-weight: 500;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      color: #ffffff;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
+        input:focus {
+            box-shadow: 0 0 0 4px rgba(240, 98, 146, 0.2);
+        }
 
-    .save {
-      background: linear-gradient(45deg, #f8bbd0, #f48fb1);
-    }
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
 
-    .save:hover {
-      background: linear-gradient(45deg, #f48fb1, #f8bbd0);
-      transform: translateY(-2px);
-    }
+        button {
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, background 0.3s ease;
+            color: #1e3a8a;
+        }
 
-    .clear {
-      background: linear-gradient(45deg, #f06292, #d81b60);
-    }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    .clear:hover {
-      background: linear-gradient(45deg, #d81b60, #f06292);
-      transform: translateY(-2px);
-    }
+        .save {
+            background: linear-gradient(45deg, #f8bbd0, #f48fb1);
+        }
 
-    .count {
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
+        .save:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #f48fb1, #f8bbd0);
+        }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      max-height: 300px;
-      overflow-y: auto;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.1);
-    }
+        .clear {
+            background: linear-gradient(45deg, #f06292, #d81b60);
+        }
 
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 12px 16px;
-      margin: 8px 0;
-      border-radius: 10px;
-      color: #ffffff;
-    }
+        .clear:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #d81b60, #f06292);
+        }
 
-    .action-buttons button {
-      font-size: 13px;
-      padding: 6px 10px;
-      background: transparent;
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 8px;
-    }
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
 
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(216, 27, 96, 0.9);
-      color: #ffffff;
-      padding: 12px 24px;
-      border-radius: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 1000;
-    }
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+        .count {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 10px;
+            color: #1e3a8a;
+            font-size: 15px;
+            animation: fadeIn 0.4s ease;
+            transition: background 0.2s ease;
+        }
+
+        li:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .li-input {
+            padding: 8px;
+            font-size: 15px;
+            border-radius: 10px;
+            border: none;
+            background: #fff;
+            color: #880e4f;
+            width: 80%;
+        }
+
+        .action-buttons button {
+            padding: 8px 12px;
+            font-size: 13px;
+            margin-left: 8px;
+            background: transparent;
+            color: #1e3a8a;
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            border-radius: 8px;
+        }
+
+        .action-buttons button:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 3px solid #1e3a8a;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(216, 27, 96, 0.9);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            input, button {
+                font-size: 14px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="welcomeMessage">Chào Mừng Đến Với Ứng Dụng</h1>
-    <p class="subtext">22Dh112225 - Võ Hoàn Mỹ</p>
-    <p class="subtext">Nhập tên của bạn bên dưới để lưu!</p>
-    <div class="input-group">
-      <input type="text" id="nameInput" placeholder="Tên của bạn">
+    <div class="container">
+        <h1 id="welcomeMessage">Chào Mừng Đến Với Ứng Dụng</h1>
+        <p class="subtext">22Dh112225 - Võ Hoàn Mỹ</p>
+        <p class="subtext">Nhập tên của bạn bên dưới để lưu!</p>
+        <div class="input-group">
+            <input type="text" id="nameInput" placeholder="Tên của bạn" aria-label="Nhập tên của bạn">
+        </div>
+        <div class="button-group">
+            <button class="save" onclick="saveName()">Lưu Tên</button>
+            <button class="clear" onclick="clearNames()">Xóa Tất Cả</button>
+        </div>
+        <p class="count">Tên Đã Lưu (<span id="nameCount">0</span>)</p>
+        <ul id="nameList" aria-live="polite"></ul>
     </div>
-    <div class="button-group">
-      <button class="save" onclick="saveName()">Lưu Tên</button>
-      <button class="clear" onclick="clearNames()">Xóa Tất Cả</button>
-    </div>
-    <p class="count">Tên Đã Lưu (<span id="nameCount">0</span>)</p>
-    <ul id="nameList" aria-live="polite"></ul>
-  </div>
 
-  <script>
-    async function showToast(message) {
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.classList.add('show'), 100);
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
+    <script>
+        // Hàm hiển thị thông báo toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
 
-    fetch('/config')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('welcomeMessage').textContent = data.WELCOME_MESSAGE || 'Chào Mừng Đến Với Ứng Dụng';
-      });
+        // Hiệu ứng ripple khi nhấn nút
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+                ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
 
-    document.addEventListener('DOMContentLoaded', loadNames);
+        // Tải thông điệp chào mừng
+        fetch('/config')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('welcomeMessage').textContent = data.WELCOME_MESSAGE || 'Chào Mừng Đến Với Ứng Dụng';
+            })
+            .catch(() => {
+                document.getElementById('welcomeMessage').textContent = 'Chào Mừng Đến Với Ứng Dụng';
+            });
 
-    async function saveName() {
-      const input = document.getElementById('nameInput');
-      const name = input.value.trim();
-      if (!name) return showToast('Vui lòng nhập tên!');
-      const res = await fetch('/names');
-      const names = await res.json();
-      if (names.includes(name)) return showToast('Tên đã tồn tại!');
-      const result = await fetch('/names', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name })
-      });
-      if (!result.ok) return showToast('Không thể lưu tên');
-      input.value = '';
-      showToast(`Đã lưu tên: ${name}`);
-      loadNames();
-    }
+        // Tải danh sách tên khi trang được tải
+        document.addEventListener('DOMContentLoaded', loadNames);
 
-    async function loadNames() {
-      const list = document.getElementById('nameList');
-      const count = document.getElementById('nameCount');
-      const res = await fetch('/names');
-      const names = await res.json();
-      list.innerHTML = '';
-      names.forEach(name => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="name-text">${name}</span>
-          <div class="action-buttons">
-            <button onclick="deleteName('${name}')">Xóa</button>
-          </div>`;
-        list.appendChild(li);
-      });
-      count.textContent = names.length;
-    }
+        async function saveName() {
+            const button = document.querySelector('.save');
+            const input = document.getElementById('nameInput');
+            const name = input.value.trim();
+            button.disabled = true;
+            button.classList.add('loading');
 
-    async function deleteName(name) {
-      if (!confirm(`Bạn có chắc muốn xóa tên ${name}?`)) return;
-      const res = await fetch(`/names?name=${encodeURIComponent(name)}`, {
-        method: 'DELETE'
-      });
-      if (res.ok) {
-        showToast(`Đã xóa tên ${name}`);
-        loadNames();
-      }
-    }
+            try {
+                if (!name) {
+                    showToast('Vui lòng nhập tên!');
+                    return;
+                }
 
-    async function clearNames() {
-      if (!confirm('Bạn có chắc muốn xóa tất cả tên?')) return;
-      const res = await fetch('/names', { method: 'DELETE' });
-      if (res.ok) {
-        showToast('Đã xóa tất cả tên!');
-        loadNames();
-      }
-    }
-  </script>
+                // Kiểm tra trùng tên
+                const res = await fetch('/names');
+                const names = await res.json();
+                if (names.includes(name)) {
+                    showToast('Tên đã tồn tại!');
+                    return;
+                }
+
+                const response = await fetch('/names', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name })
+                });
+
+                if (!response.ok) throw new Error('Không thể lưu tên');
+                input.value = '';
+                showToast(`Xin chào, ${name}! Tên đã được lưu!`);
+                await loadNames();
+            } catch (error) {
+                showToast(`Lỗi: ${error.message}`);
+            } finally {
+                button.disabled = false;
+                button.classList.remove('loading');
+            }
+        }
+
+        async function loadNames() {
+            const nameList = document.getElementById('nameList');
+            const nameCount = document.getElementById('nameCount');
+            nameList.classList.add('loading');
+
+            try {
+                const response = await fetch('/names');
+                if (!response.ok) throw new Error('Không thể tải danh sách tên');
+                const names = await response.json();
+                nameList.innerHTML = '';
+                names.forEach(name => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span class="name-text">${name}</span>
+                        <div class="action-buttons">
+                            <button onclick="editName(this, '${name}')">Sửa</button>
+                            <button onclick="deleteName('${name}')">Xóa</button>
+                        </div>
+                    `;
+                    nameList.appendChild(li);
+                });
+                nameCount.textContent = names.length;
+            } catch (error) {
+                showToast(`Lỗi: ${error.message}`);
+            } finally {
+                nameList.classList.remove('loading');
+            }
+        }
+
+        async function editName(button, oldName) {
+            const li = button.closest('li');
+            const nameText = li.querySelector('.name-text');
+            const input = document.createElement('input');
+            input.className = 'li-input';
+            input.value = oldName;
+            li.innerHTML = '';
+            li.appendChild(input);
+
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Lưu';
+            saveButton.onclick = async () => {
+                const newName = input.value.trim();
+                if (!newName) {
+                    showToast('Vui lòng nhập tên!');
+                    await loadNames();
+                    return;
+                }
+                try {
+                    const response = await fetch('/names', {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ oldName, newName })
+                    });
+                    if (!response.ok) throw new Error('Không thể cập nhật tên');
+                    showToast(`Tên đã được cập nhật thành ${newName}!`);
+                    await loadNames();
+                } catch (error) {
+                    showToast(`Lỗi: ${error.message}`);
+                    await loadNames();
+                }
+            };
+            li.appendChild(saveButton);
+            input.focus();
+        }
+
+        async function deleteName(name) {
+            if (!confirm(`Bạn có chắc muốn xóa tên ${name}?`)) return;
+            try {
+                const response = await fetch(`/names?name=${encodeURIComponent(name)}`, {
+                    method: 'DELETE'
+                });
+                if (!response.ok) throw new Error('Không thể xóa tên');
+                showToast(`Tên ${name} đã được xóa!`);
+                await loadNames();
+            } catch (error) {
+                showToast(`Lỗi: ${error.message}`);
+            }
+        }
+
+        async function clearNames() {
+            const button = document.querySelector('.clear');
+            button.disabled = true;
+            button.classList.add('loading');
+            try {
+                if (!confirm('Bạn có chắc muốn xóa tất cả tên?')) return;
+                const response = await fetch('/names', { method: 'DELETE' });
+                if (!response.ok) throw new Error('Không thể xóa tất cả tên');
+                showToast('Đã xóa tất cả tên!');
+                await loadNames();
+            } catch (error) {
+                showToast(`Lỗi: ${error.message}`);
+            } finally {
+                button.disabled = false;
+                button.classList.remove('loading');
+            }
+        }
+    </script>
 </body>
 </html>
