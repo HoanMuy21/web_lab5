@@ -1,47 +1,31 @@
-```javascript
 const express = require('express');
+const { Pool } = require('pg');
 const path = require('path');
-const { MongoClient } = require('mongodb');
+
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// MongoDB connection
-const uri = process.env.MONGODB_URI;
-let db;
-
-MongoClient.connect(uri, { useUnifiedTopology: true })
-    .then(client => {
-        db = client.db('website');
-        console.log('Connected to MongoDB');
-    })
-    .catch(err => console.error('MongoDB connection error:', err));
-
-// Serve config
-app.get('/config', (req, res) => {
-    res.json({
-        WELCOME_MESSAGE: process.env.WELCOME_MESSAGE || 'Welcome to Website'
-    });
+// Kết nối PostgreSQL (Railway inject DATABASE_URL)
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
-// Save name
-app.post('/names', async (req, res) => {
-    const { name } = req.body;
-    if (!name) return res.status(400).json({ error: 'Name is required' });
-    await db.collection('names').insertOne({ name });
-    res.json({ message: `Saved ${name}` });
+// Route test DB
+app.get('/db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.send(`Database time: ${result.rows[0].now}`);
+  } catch (err) {
+    res.status(500).send('Lỗi kết nối database: ' + err.message);
+  }
 });
 
-// Get names
-app.get('/names', async (req, res) => {
-    const names = await db.collection('names').find().toArray();
-    res.json(names.map(item => item.name));
+// Gửi file index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server đang chạy tại http://localhost:${port}`);
 });
-```
